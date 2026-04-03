@@ -1,0 +1,129 @@
+/* ── Design tokens ── */
+:root {
+  --orange:   #FF6B47;
+  --orange2:  #FF8E54;
+  --yellow:   #FFD166;
+  --teal:     #2A9D8F;
+  --teal2:    #1A7A6E;
+  --cream:    #FFF5E6;
+  --dark:     #1A1A2E;
+  --mid:      #B0A090;
+  --border:   #E8DDD0;
+  --white:    #ffffff;
+
+  --font-display: 'Fredoka', sans-serif;
+  --font-body:    'Nunito', sans-serif;
+
+  --radius-sm:  8px;
+  --radius-md:  16px;
+  --radius-lg:  22px;
+  --radius-xl:  32px;
+  --radius-pill: 100px;
+
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md:  0 6px 20px rgba(0,0,0,0.12);
+  --shadow-lg:  0 16px 48px rgba(0,0,0,0.16);
+  --shadow-orange: 0 8px 24px rgba(255,107,71,0.35);
+
+  /* Layout */
+  --nav-height: 76px;
+  --header-height: 52px;
+  --safe-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--dark);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+input, textarea {
+  font-family: var(--font-body);
+  outline: none;
+}
+
+/* ── Scrollbar hide ── */
+.scroll-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scroll-hide::-webkit-scrollbar { display: none; }
+
+/* ── Utility ── */
+.flex        { display: flex; }
+.flex-col    { display: flex; flex-direction: column; }
+.flex-1      { flex: 1; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.text-center { text-align: center; }
+.w-full      { width: 100%; }
+.relative    { position: relative; }
+.absolute    { position: absolute; }
+.inset-0     { inset: 0; }
+.overflow-hidden { overflow: hidden; }
+
+/* ── Screen wrapper ── */
+.screen-wrap {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+/* ── Common page transitions ── */
+@keyframes slideUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes polaDrop {
+  0%   { transform: rotate(-1.5deg) translateY(-28px) scale(0.9); opacity: 0; }
+  100% { transform: rotate(-1.5deg) translateY(0)     scale(1);   opacity: 1; }
+}
+@keyframes popIn {
+  0%   { transform: scale(0.7); opacity: 0; }
+  70%  { transform: scale(1.06); }
+  100% { transform: scale(1);   opacity: 1; }
+}
+@keyframes countIn {
+  0%   { transform: scale(1.9); opacity: 0; }
+  30%  { opacity: 1; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(var(--mx, 20px), var(--my, -20px)) scale(1.12); }
+}
