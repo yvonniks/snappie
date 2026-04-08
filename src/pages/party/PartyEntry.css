@@ -1,0 +1,132 @@
+.entry-screen {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(160deg, #FFE4E1 0%, #FFBFA3 55%, #FFD6C4 100%);
+  overflow: hidden;
+}
+
+/* ── Spotlight — z-index 16, warm cone from top-center over curtains ── */
+.entry-spotlight {
+  position: absolute; inset: 0;
+  z-index: 16; pointer-events: none;
+  background: radial-gradient(ellipse 65% 55% at 50% 0%,
+    rgba(255,235,150,0.32) 0%,
+    rgba(255,220,100,0.12) 45%,
+    transparent 70%
+  );
+  transition: opacity 0.8s ease;
+}
+.entry-spotlight.fade-out { opacity: 0; }
+
+/* ── Curtains — z-index 15, in front of balloon cluster ── */
+.curtain {
+  position: absolute; top: 0; bottom: 0; width: 50%;
+  z-index: 15;
+  transition: transform 0.85s cubic-bezier(0.77, 0, 0.18, 1);
+}
+.curtain-left  { left: 0;  background: var(--curtain-l, #F472B6); transform-origin: left; }
+.curtain-right { right: 0; background: var(--curtain-r, #C084FC); transform-origin: right; }
+.curtain::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    90deg, transparent 0px, transparent 18px,
+    rgba(0,0,0,0.06) 18px, rgba(0,0,0,0.06) 20px
+  );
+}
+.curtain-left.open  { transform: translateX(-100%); }
+.curtain-right.open { transform: translateX(100%); }
+
+/* ── Balloon cover — z-index 10, behind curtains ── */
+.balloon-cover {
+  position: absolute; inset: 0;
+  z-index: 10; pointer-events: none;
+  overflow: hidden;
+}
+.balloon-item {
+  position: absolute;
+  user-select: none;
+  line-height: 1;
+}
+.balloon-item.fly {
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.6, 1), opacity 0.9s ease;
+}
+
+/* ── Content — z-index 20, always above curtains ── */
+.entry-content {
+  position: relative; z-index: 20;
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+  padding: max(24px, env(safe-area-inset-top)) 32px 32px;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 24px;
+  animation: fadeIn 0.3s ease;
+}
+
+.entry-live-row {
+  display: flex; align-items: center; gap: 7px;
+  margin-bottom: 20px;
+}
+.entry-live-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #7fffd4;
+  box-shadow: 0 0 0 3px rgba(127,255,212,0.3);
+  animation: blink 1.4s ease-in-out infinite;
+}
+.entry-live-label {
+  font-size: 11px; font-weight: 800; letter-spacing: 2px;
+  text-transform: uppercase; color: rgba(255,255,255,0.9);
+}
+
+.entry-title {
+  font-family: var(--font-display); font-size: 38px;
+  font-weight: 700; color: #fff;
+  margin-bottom: 10px; line-height: 1.15;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+.entry-sub {
+  font-size: 14px; color: rgba(255,255,255,0.82);
+  font-weight: 600; margin-bottom: 32px;
+}
+
+.entry-btn {
+  padding: 18px 48px;
+  border: none; border-radius: var(--radius-pill);
+  font-family: var(--font-display); font-size: 22px; font-weight: 700;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.35);
+  transition: transform 0.14s, box-shadow 0.14s;
+}
+.entry-btn:active { transform: scale(0.96); box-shadow: none; }
+
+/* ── Loading ── */
+.entry-spinner {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 4px solid rgba(255,255,255,0.15);
+  border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Welcome message (shown after curtains open) ── */
+.entry-welcome {
+  animation: fadeIn 0.5s ease;
+  max-width: 260px; text-align: center;
+}
+.entry-welcome-title {
+  font-family: var(--font-display); font-size: 18px; font-weight: 700;
+  color: #fff; margin: 0 0 8px;
+}
+.entry-welcome-msg {
+  font-size: 13px; color: rgba(255,255,255,0.85);
+  line-height: 1.55; margin: 0;
+}
+
+/* ── Error state ── */
+.entry-error .entry-err-icon  { font-size: 56px; margin-bottom: 16px; }
+.entry-error .entry-err-title {
+  font-family: var(--font-display); font-size: 26px;
+  font-weight: 700; color: #fff; margin-bottom: 8px;
+}
+.entry-error .entry-err-sub   { font-size: 14px; color: rgba(255,255,255,0.45); }

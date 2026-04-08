@@ -1,0 +1,167 @@
+.booth-screen {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  background: #000;
+  overflow: hidden;
+}
+
+/* ── Top bar ── */
+.cam-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: env(safe-area-inset-top, 44px) 16px 12px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+}
+.cam-icon-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.15); border: none;
+  color: #fff; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.cam-icon-btn:active { background: rgba(255,255,255,0.3); }
+.cam-mode-badge {
+  font-size: 11px; font-weight: 800; letter-spacing: 1.8px;
+  text-transform: uppercase; color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.1); padding: 5px 12px;
+  border-radius: var(--radius-pill);
+}
+
+/* ── Viewfinder ── */
+.vf {
+  flex: 1; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.vf-video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1); /* mirror front camera */
+}
+
+/* Dare banner */
+.dare-banner {
+  position: absolute; bottom: 90px; left: 16px; right: 16px;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 10px;
+  z-index: 5;
+}
+.dare-banner-emoji { font-size: 22px; flex-shrink: 0; }
+.dare-banner-text  {
+  font-size: 13px; font-weight: 700; color: #fff;
+  line-height: 1.3;
+}
+
+/* Corner brackets */
+.vf-bracket {
+  position: absolute; width: 28px; height: 28px;
+  border-color: rgba(255,255,255,0.5); border-style: solid;
+  z-index: 3;
+}
+.vf-bracket.tl { top: 80px;  left: 16px;  border-width: 2px 0 0 2px; }
+.vf-bracket.tr { top: 80px;  right: 16px; border-width: 2px 2px 0 0; }
+.vf-bracket.bl { bottom: 8px; left: 16px;  border-width: 0 0 2px 2px; }
+.vf-bracket.br { bottom: 8px; right: 16px; border-width: 0 2px 2px 0; }
+
+/* Countdown */
+.cam-countdown {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.35); z-index: 6;
+}
+.count-dig {
+  font-family: var(--font-display); font-size: 160px; font-weight: 700;
+  color: #fff; line-height: 1;
+  animation: countIn 0.9s cubic-bezier(0.22,1,0.36,1);
+  text-shadow: 0 4px 40px rgba(0,0,0,0.6);
+}
+
+/* Processing overlay */
+.cam-processing {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 16px;
+  background: rgba(0,0,0,0.7); z-index: 6;
+}
+.proc-spinner {
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 4px solid rgba(255,255,255,0.2);
+  border-top-color: var(--orange);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.proc-label {
+  font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.8);
+}
+
+/* Flash */
+.cam-flash {
+  position: absolute; inset: 0;
+  background: #fff; z-index: 7;
+  animation: flashOut 0.12s ease-out forwards;
+}
+@keyframes flashOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* Camera error */
+.cam-error {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  background: #111; z-index: 5; text-align: center; padding: 32px;
+}
+.cam-error-icon { font-size: 52px; }
+.cam-error-text { font-size: 18px; font-weight: 700; color: #fff; }
+.cam-error-sub  { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
+.cam-error-retry {
+  padding: 11px 28px; border-radius: var(--radius-pill); border: none;
+  background: var(--orange); color: #fff; font-size: 14px; font-weight: 700;
+  margin-bottom: 10px;
+}
+.cam-error-home {
+  background: none; border: none;
+  color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 700;
+  text-decoration: underline; cursor: pointer;
+}
+
+/* Burst dots */
+.burst-dots {
+  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 6px; z-index: 4;
+}
+.bd {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  transition: background 0.15s, transform 0.15s;
+}
+.bd.lit {
+  background: var(--orange);
+  transform: scale(1.3);
+}
+
+/* ── Controls ── */
+.cam-ctrl {
+  display: flex; align-items: center; justify-content: space-around;
+  padding: 20px 32px calc(20px + env(safe-area-inset-bottom, 16px));
+  background: rgba(0,0,0,0.85);
+}
+.ctrl-btn {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(255,255,255,0.12); border: none;
+  font-size: 20px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, transform 0.14s;
+}
+.ctrl-btn:active { transform: scale(0.9); }
+.shutter {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: #fff; border: 4px solid rgba(255,255,255,0.5);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.25);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.shutter:active  { transform: scale(0.93); box-shadow: none; }
+.shutter:disabled { opacity: 0.45; }

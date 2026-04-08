@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+
+.pstrip-screen {
+  position: fixed; inset: 0;
+  background: linear-gradient(155deg, #1A1A2E 0%, #0d2030 55%, #0a2d27 100%);
+  overflow-y: auto;
+}
+
+/* ── Progress bar ── */
+.pstrip-progress-bar {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 4px; z-index: 100;
+  background: linear-gradient(90deg, #FF6CAB, #C084FC, #FFD166, #FF6CAB);
+  background-size: 200% 100%;
+  animation: progressSlide 1.2s linear infinite;
+}
+@keyframes progressSlide {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.pstrip-scroll {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 40px 24px 48px; gap: 16px; min-height: 100%;
+}
+
+.pstrip-hint {
+  font-family: var(--font-display); font-size: 20px; font-weight: 700;
+  color: #fff; margin: 0;
+}
+
+/* ── Three polaroids ── */
+.pstrip-polas {
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  width: 100%; max-width: 240px;
+}
+.pstrip-pola {
+  background: #fff; padding: 8px 8px 32px;
+  border-radius: 3px; width: 100%;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.4);
+  transform: rotate(var(--r, 0deg));
+  animation: polaDrop 0.45s cubic-bezier(0.34,1.56,0.64,1);
+}
+.pstrip-img-wrap { width: 100%; aspect-ratio: 1; overflow: hidden; border-radius: 2px; background: #f0ebe3; }
+.pstrip-img      { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.pstrip-dare {
+  font-size: 12px; color: rgba(255,255,255,0.45); font-weight: 700; margin: 0; text-align: center;
+}
+
+/* ── Caption input ── */
+.pstrip-caption-input {
+  width: 100%; max-width: 280px; padding: 10px 14px;
+  background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius-pill, 999px); color: #fff;
+  font-family: var(--font-display); font-size: 14px; text-align: center; outline: none;
+  transition: border-color 0.15s;
+}
+.pstrip-caption-input:focus { border-color: rgba(255,255,255,0.5); }
+.pstrip-caption-input::placeholder { color: rgba(255,255,255,0.35); }
+
+/* ── Actions ── */
+.pstrip-actions {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  width: 100%; max-width: 280px;
+}
+.pstrip-save-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 16px;
+  background: linear-gradient(135deg, var(--orange, #FF8C42), var(--orange2, #FF6CAB));
+  color: #fff; border: none; border-radius: var(--radius-pill, 999px);
+  font-family: var(--font-display); font-size: 20px; font-weight: 700;
+  box-shadow: var(--shadow-orange, 0 8px 24px rgba(255,108,66,0.4));
+  transition: transform 0.14s;
+}
+.pstrip-save-btn:active  { transform: scale(0.97); }
+.pstrip-save-btn:disabled { opacity: 0.6; }
+.pstrip-spinner {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff;
+  animation: spin 0.7s linear infinite; display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.pstrip-error  { font-size: 12px; color: #ff6b6b; font-weight: 700; text-align: center; }
+.pstrip-retake {
+  background: none; border: none; color: rgba(255,255,255,0.35);
+  font-size: 13px; font-weight: 700; text-decoration: underline; cursor: pointer;
+}

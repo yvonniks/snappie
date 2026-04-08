@@ -1,0 +1,175 @@
+.pcam-screen {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  background: #000; overflow: hidden;
+}
+
+/* ── Top bar — normal flow (NOT absolute) ── */
+.pcam-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: max(16px, env(safe-area-inset-top)) 16px 10px;
+  background: rgba(0,0,0,0.75);
+  flex-shrink: 0; z-index: 10;
+}
+.pcam-icon-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.15); border: none;
+  color: #fff; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.pcam-icon-btn:active { background: rgba(255,255,255,0.3); }
+.pcam-mode-badge {
+  font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
+  text-transform: uppercase; color: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.12); padding: 5px 12px;
+  border-radius: var(--radius-pill);
+}
+
+/* ── Viewfinder — fills remaining space ── */
+.pcam-vf {
+  flex: 1; position: relative; overflow: hidden; min-height: 0;
+}
+.pcam-video {
+  width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1);
+  display: block;
+}
+
+/* Dare overlay at top of viewfinder */
+.pcam-dare-overlay {
+  position: absolute; top: 12px; left: 12px; right: 12px;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+  border-radius: var(--radius-pill); padding: 8px 16px;
+  font-size: 13px; font-weight: 700; color: #fff;
+  text-align: center; z-index: 4;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Corner brackets */
+.pcam-bracket { position: absolute; width: 26px; height: 26px; border-color: rgba(255,255,255,0.45); border-style: solid; z-index: 3; }
+.pcam-bracket.tl { top: 10px;  left: 10px;  border-width: 2px 0 0 2px; }
+.pcam-bracket.tr { top: 10px;  right: 10px; border-width: 2px 2px 0 0; }
+.pcam-bracket.bl { bottom: 10px; left: 10px;  border-width: 0 0 2px 2px; }
+.pcam-bracket.br { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
+
+/* Countdown */
+.pcam-countdown {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.35);
+  display: flex; align-items: center; justify-content: center; z-index: 6;
+}
+.pcam-count-dig {
+  font-family: var(--font-display); font-size: 150px; font-weight: 700;
+  color: #fff; line-height: 1;
+  animation: countIn 0.9s cubic-bezier(0.22,1,0.36,1);
+  text-shadow: 0 4px 32px rgba(0,0,0,0.5);
+}
+
+/* Flash */
+.pcam-flash {
+  position: absolute; inset: 0; background: #fff; z-index: 7;
+  animation: flashOut 0.12s ease-out forwards;
+}
+@keyframes flashOut { from { opacity: 1; } to { opacity: 0; } }
+
+/* Camera error */
+.pcam-error {
+  position: absolute; inset: 0; background: #111; z-index: 8;
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 10px; padding: 32px; text-align: center;
+}
+.pcam-error-icon { font-size: 48px; }
+.pcam-error-text { font-size: 17px; font-weight: 700; color: #fff; }
+.pcam-error-sub  { font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 6px; }
+.pcam-error-retry {
+  padding: 11px 28px; border-radius: var(--radius-pill); border: none;
+  background: var(--theme-primary, #FF6CAB); color: #fff;
+  font-size: 14px; font-weight: 700;
+}
+.pcam-error-home {
+  background: none; border: none; color: rgba(255,255,255,0.35);
+  font-size: 13px; font-weight: 700; text-decoration: underline;
+}
+
+/* ── Pose prompt chips ── */
+.pcam-prompts {
+  display: flex; gap: 8px; overflow-x: auto;
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.88);
+  flex-shrink: 0;
+}
+.pcam-chip {
+  flex-shrink: 0; padding: 7px 14px;
+  border-radius: var(--radius-pill); border: 2px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 700;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.pcam-chip.active {
+  background: var(--theme-primary, #FF6CAB);
+  border-color: var(--theme-primary, #FF6CAB);
+  color: #fff;
+  box-shadow: 0 0 16px rgba(255,108,171,0.5);
+}
+
+/* ── Shutter row ── */
+.pcam-ctrl {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 32px calc(14px + env(safe-area-inset-bottom, 16px));
+  background: rgba(0,0,0,0.92);
+  flex-shrink: 0;
+}
+
+.pcam-upload-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.18);
+  border-radius: var(--radius-md); padding: 10px 14px;
+  color: rgba(255,255,255,0.6); font-size: 20px; line-height: 1;
+  transition: background 0.2s;
+}
+.pcam-upload-btn span { font-size: 9px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; }
+.pcam-upload-btn:active { background: rgba(255,255,255,0.2); }
+
+.pcam-shutter {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--theme-primary, #FF6CAB), #fff);
+  border: 4px solid rgba(255,255,255,0.6);
+  box-shadow: 0 0 0 4px rgba(255,108,171,0.35), 0 8px 24px rgba(0,0,0,0.3);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.12s, box-shadow 0.12s;
+  padding: 0;
+}
+.pcam-shutter-inner {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #fff;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);
+}
+.pcam-shutter:active {
+  transform: scale(0.91);
+  box-shadow: 0 0 0 2px rgba(255,108,171,0.2), 0 4px 12px rgba(0,0,0,0.2);
+}
+.pcam-shutter:disabled { opacity: 0.4; }
+
+/* ── Segmented Photo / Strip toggle ── */
+.pcam-seg {
+  display: flex; background: rgba(255,255,255,0.12);
+  border-radius: var(--radius-pill); padding: 3px;
+}
+.pcam-seg-btn {
+  padding: 5px 12px; border: none; border-radius: var(--radius-pill);
+  font-size: 11px; font-weight: 800; letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.45); background: transparent;
+  transition: background 0.15s, color 0.15s; cursor: pointer;
+}
+.pcam-seg-btn.active { background: rgba(255,255,255,0.9); color: #222; }
+
+.pcam-ctrl-spacer { width: 60px; }
+
+/* ── Strip shot badge ── */
+.pcam-strip-badge {
+  position: absolute; top: 54px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.65); backdrop-filter: blur(6px);
+  border-radius: var(--radius-pill); padding: 6px 16px;
+  font-size: 12px; font-weight: 800; letter-spacing: 1px;
+  color: #fff; z-index: 5; white-space: nowrap;
+}

@@ -1,0 +1,126 @@
+.party-live-screen {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center;
+  background: linear-gradient(155deg, #1A1A2E 0%, #0d2030 55%, #0a2d27 100%);
+  padding: env(safe-area-inset-top, 44px) 24px calc(24px + env(safe-area-inset-bottom, 16px));
+  gap: 20px; overflow-y: auto;
+}
+
+/* ── Header ── */
+.pl-header {
+  width: 100%; display: flex; align-items: center; gap: 10px;
+  padding: 0 4px;
+}
+.pl-status-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #2ecc71;
+  box-shadow: 0 0 0 3px rgba(46,204,113,0.25);
+  animation: blink 1.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.pl-status-dot[data-expired="true"] {
+  background: #aaa;
+  box-shadow: none;
+  animation: none;
+}
+.pl-event-name {
+  flex: 1; font-family: var(--font-display);
+  font-size: 20px; font-weight: 700; color: #fff;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.pl-timer {
+  font-family: 'Courier New', monospace;
+  font-size: 18px; font-weight: 700; color: var(--yellow);
+  letter-spacing: 1px; flex-shrink: 0;
+}
+.pl-timer.expired { color: #aaa; font-family: var(--font-body); font-size: 13px; }
+
+/* ── QR Card ── */
+.pl-qr-card {
+  background: var(--cream); border-radius: var(--radius-xl);
+  padding: 24px 24px 20px; width: 100%; max-width: 300px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+}
+.pl-qr-eyebrow {
+  font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--mid);
+}
+.pl-qr-img {
+  width: 200px; height: 200px; border-radius: var(--radius-md);
+  display: block;
+}
+.pl-qr-placeholder {
+  width: 200px; height: 200px; border-radius: var(--radius-md);
+  background: var(--border); animation: pulse 1.2s ease-in-out infinite alternate;
+}
+@keyframes pulse { from { opacity: 0.5; } to { opacity: 1; } }
+
+.pl-share-url {
+  font-size: 10px; color: var(--mid); font-weight: 600;
+  word-break: break-all; text-align: center;
+  padding: 0 8px;
+}
+.pl-copy-btn {
+  background: var(--dark); color: #fff;
+  border: none; border-radius: var(--radius-pill);
+  font-size: 12px; font-weight: 700;
+  padding: 7px 20px;
+  transition: background 0.2s;
+}
+.pl-copy-btn:active { background: var(--teal); }
+
+/* ── Stats ── */
+.pl-stats {
+  display: flex; align-items: center; gap: 24px;
+  background: rgba(255,255,255,0.06); border-radius: var(--radius-lg);
+  padding: 16px 40px; width: 100%; max-width: 300px;
+  justify-content: center;
+}
+.pl-stat { text-align: center; }
+.pl-stat-val {
+  font-family: var(--font-display); font-size: 32px;
+  font-weight: 700; color: #fff; line-height: 1;
+}
+.pl-stat-lbl {
+  font-size: 10px; font-weight: 800; letter-spacing: 1.2px;
+  text-transform: uppercase; color: rgba(255,255,255,0.35);
+  margin-top: 4px;
+}
+.pl-stat-div {
+  width: 1px; height: 40px; background: rgba(255,255,255,0.12);
+}
+
+/* ── Actions ── */
+.pl-actions {
+  display: flex; flex-direction: column; gap: 10px;
+  width: 100%; max-width: 300px;
+}
+.pl-booth-btn {
+  width: 100%; padding: 16px;
+  background: linear-gradient(135deg, var(--orange), var(--orange2));
+  color: #fff; border: none; border-radius: var(--radius-pill);
+  font-family: var(--font-display); font-size: 20px; font-weight: 700;
+  box-shadow: var(--shadow-orange);
+  transition: transform 0.14s, box-shadow 0.14s;
+}
+.pl-booth-btn:active   { transform: scale(0.97); box-shadow: none; }
+.pl-booth-btn:disabled { opacity: 0.45; }
+
+.pl-gallery-btn {
+  width: 100%; padding: 13px;
+  background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.75); border-radius: var(--radius-pill);
+  font-size: 16px; font-weight: 700;
+  transition: background 0.2s;
+}
+.pl-gallery-btn:active { background: rgba(255,255,255,0.16); }
+
+.pl-end-btn {
+  background: none; border: none;
+  color: rgba(255,255,255,0.3); font-size: 13px; font-weight: 700;
+  text-decoration: underline; padding: 4px;
+  transition: color 0.2s;
+}
+.pl-end-btn:active { color: #ff6b6b; }

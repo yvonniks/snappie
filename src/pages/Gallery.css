@@ -1,0 +1,136 @@
+.gallery-screen {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  background: var(--cream);
+  overflow: hidden;
+}
+
+/* ── Header ── */
+.gallery-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: env(safe-area-inset-top, 44px) 20px 14px;
+  background: linear-gradient(148deg, var(--orange), var(--orange2));
+  flex-shrink: 0;
+}
+.gallery-back {
+  background: rgba(255,255,255,0.2); border: none;
+  color: #fff; font-size: 13px; font-weight: 700;
+  padding: 7px 14px; border-radius: var(--radius-pill);
+  transition: background 0.2s;
+}
+.gallery-back:active { background: rgba(255,255,255,0.35); }
+.gallery-title {
+  font-family: var(--font-display); font-size: 20px;
+  font-weight: 700; color: #fff;
+}
+.gallery-count {
+  font-size: 11px; font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.15);
+  padding: 5px 10px; border-radius: var(--radius-pill);
+}
+
+/* ── Body ── */
+.gallery-body {
+  flex: 1; overflow-y: auto;
+  padding: 20px 16px 40px;
+}
+
+/* ── Grid ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 16px;
+}
+.gallery-pola {
+  background: #fff;
+  padding: 7px 7px 34px;
+  border-radius: 3px;
+  box-shadow: var(--shadow-sm);
+  transform: rotate(var(--r, 0deg));
+  cursor: pointer;
+  transition: transform 0.22s, box-shadow 0.22s;
+  position: relative;
+}
+.gallery-pola:hover {
+  transform: rotate(0deg) scale(1.05) !important;
+  box-shadow: var(--shadow-md);
+}
+.gallery-pola-img-wrap {
+  width: 100%; aspect-ratio: 1;
+  overflow: hidden; border-radius: 2px;
+  background: #f0ebe3;
+}
+.gallery-pola-img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.gallery-pola-cap {
+  position: absolute; bottom: 5px; left: 3px; right: 3px;
+  text-align: center;
+  font-family: var(--font-display); font-size: 9px;
+  font-weight: 500; color: #bbb;
+}
+
+/* ── Empty / loading states ── */
+.gallery-empty {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 80px 24px; gap: 12px; text-align: center;
+}
+.gallery-spinner {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 4px solid var(--border);
+  border-top-color: var(--orange);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.gallery-empty-icon { font-size: 56px; }
+.gallery-empty-title {
+  font-family: var(--font-display); font-size: 22px;
+  font-weight: 700; color: var(--dark);
+}
+.gallery-empty-sub { font-size: 13px; color: var(--mid); }
+.gallery-cta {
+  margin-top: 8px; padding: 13px 32px;
+  background: linear-gradient(135deg, var(--orange), var(--orange2));
+  color: #fff; border: none; border-radius: var(--radius-pill);
+  font-family: var(--font-display); font-size: 18px; font-weight: 700;
+  box-shadow: var(--shadow-orange);
+  transition: transform 0.14s;
+}
+.gallery-cta:active { transform: scale(0.97); }
+
+/* ── Lightbox ── */
+.lightbox {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.82); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 500; padding: 24px;
+  animation: fadeIn 0.2s ease;
+}
+.lightbox-pola {
+  background: #fff; padding: 12px 12px 56px;
+  border-radius: 3px; width: 100%; max-width: 340px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+  animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.lightbox-img {
+  width: 100%; aspect-ratio: 1; object-fit: cover;
+  display: block; border-radius: 2px;
+}
+.lightbox-actions {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  display: flex; gap: 8px; padding: 10px 12px;
+  justify-content: center;
+}
+.lb-btn {
+  flex: 1; padding: 8px 4px;
+  border: none; border-radius: var(--radius-pill);
+  font-size: 12px; font-weight: 700;
+  transition: opacity 0.2s;
+}
+.lb-download { background: var(--teal);   color: #fff; }
+.lb-delete   { background: #fee;          color: #c00; }
+.lb-close    { background: var(--border); color: var(--dark); }
+.lb-btn.busy { opacity: 0.5; }
+.lb-btn:active { opacity: 0.7; }

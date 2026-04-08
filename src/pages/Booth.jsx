@@ -12,7 +12,7 @@ const FRAME_SIZE     = 800
 export default function Booth() {
   const nav = useNavigate()
   const { shootMode, activeDare, setCapturedBlob, setCapturedDataUrl, setCapturedFrames, albumMode } = useApp()
-  const { videoRef, ready, error, flipCamera, captureFrame, captureBurst, startCamera } = useCamera()
+  const { videoRef, ready, error, facing, flipCamera, captureFrame, captureBurst, startCamera } = useCamera()
 
   const [phase, setPhase]         = useState('idle')   // idle | counting | capturing | processing
   const [countdown, setCountdown] = useState(3)
@@ -154,6 +154,8 @@ export default function Booth() {
             <div className="cam-error-icon">📷</div>
             <div className="cam-error-text">Camera access needed</div>
             <div className="cam-error-sub">{error}</div>
+            <button className="cam-error-retry" onClick={() => startCamera(facing)}>Try again</button>
+            <button className="cam-error-home" onClick={() => nav('/')}>← Home</button>
           </div>
         )}
 

@@ -28,8 +28,10 @@ export function useCamera() {
       streamRef.current = stream
       if (videoRef.current) {
         videoRef.current.srcObject = stream
-        await videoRef.current.play()
-        setReady(true)
+        videoRef.current.onloadedmetadata = () => {
+          videoRef.current?.play().catch(() => {})
+          setReady(true)
+        }
       }
     } catch (err) {
       setError(err.message || 'Camera access denied')

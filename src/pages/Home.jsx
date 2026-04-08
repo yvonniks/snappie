@@ -1,13 +1,21 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../App'
+import { usePartyMode } from '../hooks/usePartyMode'
 import './Home.css'
 
 const FAMILY_PIN = import.meta.env.VITE_FAMILY_PIN || '1234'
 
 export default function Home() {
   const nav = useNavigate()
-  const { setShootMode, setAlbumMode } = useApp()
+  const { setShootMode, setAlbumMode, setPartySession } = useApp()
+  const { session: partySession, isActive: partyActive } = usePartyMode()
+
+  function resumeParty() {
+    setPartySession(partySession)
+    setAlbumMode('event')
+    nav('/party/live')
+  }
   const [activeTab, setActiveTab] = useState('photo')
   const [pinOpen, setPinOpen] = useState(false)
   const [pinInput, setPinInput] = useState('')
@@ -45,13 +53,22 @@ export default function Home() {
       {/* ── Scrollable body ── */}
       <main className="home-body scroll-hide">
 
-        {/* Party Mode card */}
-        <div className="party-card" onClick={() => nav('/party/setup')}>
-          <div className="party-eyebrow">✨ Event Feature</div>
-          <div className="party-title">🎉 Party Mode</div>
-          <div className="party-sub">Set up a shared booth for guests — your family album stays private.</div>
-          <div className="party-arrow">→</div>
-        </div>
+        {/* Party Mode card — resume if session active, else setup */}
+        {partyActive ? (
+          <div className="party-card" onClick={resumeParty}>
+            <div className="party-eyebrow">🟢 Party in progress</div>
+            <div className="party-title">{partySession.eventName}</div>
+            <div className="party-sub">Tap to return to your live party dashboard.</div>
+            <div className="party-arrow">→</div>
+          </div>
+        ) : (
+          <div className="party-card" onClick={() => nav('/party/setup')}>
+            <div className="party-eyebrow">✨ Event Feature</div>
+            <div className="party-title">🎉 Party Mode</div>
+            <div className="party-sub">Set up a shared booth for guests — your family album stays private.</div>
+            <div className="party-arrow">→</div>
+          </div>
+        )}
 
         {/* Mode tabs */}
         <div className="mode-tabs">
