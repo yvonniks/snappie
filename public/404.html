@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Snappie</title>
+    <script>
+      // GitHub Pages SPA redirect: converts a 404 back into the index.html route
+      // so React Router can handle it client-side.
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.host +
+        l.pathname.split('/').slice(0, 2).join('/') +
+        '/?p=' + l.pathname.slice(1).replace(/&/g, '~and~') +
+        (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
+    </script>
+  </head>
+</html>

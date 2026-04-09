@@ -11,6 +11,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <title>Snappie</title>
+    <script>
+      // GitHub Pages SPA redirect receiver: restores the original URL
+      // that was encoded by 404.html so React Router sees the correct path.
+      (function() {
+        var p = window.location.search.slice(1).split('&').reduce(function(acc, s) {
+          var r = s.split('='); acc[r[0]] = r.slice(1).join('=').replace(/~and~/g, '&'); return acc;
+        }, {});
+        if (p.p !== undefined) {
+          window.history.replaceState(
+            null, null,
+            window.location.pathname.split('/').slice(0, 2).join('/') +
+            '/' + p.p + (p.q ? '?' + p.q : '') + window.location.hash
+          );
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

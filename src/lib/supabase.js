@@ -3,7 +3,9 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl  = import.meta.env.VITE_SUPABASE_URL
 const supabaseKey  = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-export const supabase = createClient(supabaseUrl, supabaseKey)
+export const supabase = (supabaseUrl && supabaseKey)
+  ? createClient(supabaseUrl, supabaseKey)
+  : null
 
 // ─── Storage bucket names ─────────────────────────────────
 const FAMILY_BUCKET = 'family-album'
@@ -12,6 +14,7 @@ const EVENT_BUCKET  = 'event-albums'
 // ─── Upload a blob to Supabase Storage ───────────────────
 // Returns: { url, path, error }
 export async function uploadMedia(blob, { albumType = 'family', eventId = null, filename } = {}) {
+  if (!supabase) return { url: null, path: null, error: new Error('Supabase not configured') }
   const bucket = albumType === 'event' ? EVENT_BUCKET : FAMILY_BUCKET
   const folder = albumType === 'event' ? `${eventId}/` : ''
   const ext    = blob.type === 'image/gif' ? 'gif' : 'jpg'
@@ -30,6 +33,7 @@ export async function uploadMedia(blob, { albumType = 'family', eventId = null, 
 
 // ─── List media in family album (private bucket, signed URLs) ────────────────
 export async function listFamilyMedia() {
+  if (!supabase) return []
   const { data, error } = await supabase.storage
     .from(FAMILY_BUCKET)
     .list('', { limit: 200, sortBy: { column: 'created_at', order: 'desc' } })
@@ -48,6 +52,7 @@ export async function listFamilyMedia() {
 
 // ─── List media in an event album ────────────────────────
 export async function listEventMedia(eventId) {
+  if (!supabase) return []
   const { data, error } = await supabase.storage
     .from(EVENT_BUCKET)
     .list(`${eventId}/`, { limit: 200, sortBy: { column: 'created_at', order: 'desc' } })
@@ -78,6 +83,7 @@ export async function downloadMedia(url, filename = 'snappie-photo.jpg') {
 
 // ─── Event config (_config.json per event) ───────────────
 export async function uploadEventConfig(code, config) {
+  if (!supabase) return { error: new Error('Supabase not configured') }
   const json = JSON.stringify(config)
   const blob = new Blob([json], { type: 'application/json' })
   const { error } = await supabase.storage
@@ -87,6 +93,7 @@ export async function uploadEventConfig(code, config) {
 }
 
 export async function loadEventConfig(code) {
+  if (!supabase) return null
   const { data, error } = await supabase.storage
     .from(EVENT_BUCKET)
     .download(`${code}/_config.json`)
@@ -100,6 +107,7 @@ export async function loadEventConfig(code) {
 
 // ─── Delete a file ────────────────────────────────────────
 export async function deleteMedia(path, albumType = 'family') {
+  if (!supabase) return { error: new Error('Supabase not configured') }
   const bucket = albumType === 'event' ? EVENT_BUCKET : FAMILY_BUCKET
   const { error } = await supabase.storage.from(bucket).remove([path])
   return { error }
